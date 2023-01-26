@@ -40,6 +40,8 @@ class PaymentRequest {
    * @param string $url Full Merchant URL. A result will be sent to this address  request. The result is forwarded over customer browser
    * @param string|null $merOrderNumber Order Number. In case it is not specified, it will be used  value $orderNumber It will appear on the bank statement.
    * @param string|null $md Any merchant data.
+   * @param string|null $email Customer's email
+   * @param string|null $lang Customer's language
    */
   public function __construct (
     int $orderNumber,
@@ -50,7 +52,9 @@ class PaymentRequest {
     string $merOrderNumber = null,
     string $md = null,
     AddInfo $addInfo = null,
-    string $paymentMethod = self::PAYMENT_CARD
+    string $paymentMethod = self::PAYMENT_CARD,
+    string $email = null,
+    string $lang = null
   ) {
     $this->params['MERCHANTNUMBER'] = "";
     $this->params['OPERATION'] = 'CREATE_ORDER';
@@ -68,6 +72,14 @@ class PaymentRequest {
 
     if ($md !== null) {
       $this->params['MD'] = $md;
+    }
+
+    if ($email !== null) {
+      $this->params['EMAIL'] = $email;
+    }
+
+    if ($lang !== null) {
+      $this->params['LANG'] = $lang;
     }
 
     if($addInfo !== null) {
